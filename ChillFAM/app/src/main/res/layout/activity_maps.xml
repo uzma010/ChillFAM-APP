@@ -51,10 +51,7 @@
             android:imeOptions="actionSearch"
             android:id="@+id/input_search"
             android:background="@null"
-            android:hint="Enter Address, City or Post Code"
-
-
-            />
+            android:hint="Enter Address, City or Post Code"/>
 
 
     </android.support.design.circularreveal.CircularRevealRelativeLayout>

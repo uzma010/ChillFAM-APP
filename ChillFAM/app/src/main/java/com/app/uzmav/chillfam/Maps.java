@@ -10,7 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
-//import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
@@ -18,7 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//import android.R;
+
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -39,7 +39,7 @@ import java.util.List;
 //import android.support.annotation.Nullable;
 
 
-public class Maps extends FragmentActivity implements OnMapReadyCallback {
+    public class Maps extends FragmentActivity implements OnMapReadyCallback {
 
 
     private static final String TAG = "Maps";
