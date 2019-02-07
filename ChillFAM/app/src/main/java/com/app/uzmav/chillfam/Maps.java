@@ -27,9 +27,9 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 
 import java.io.IOException;
 import java.security.Security;
@@ -70,7 +70,7 @@ import java.util.List;
 
         getLocationPermission();
 
-        initSearch();
+
     }
 
     private void initSearch(){
@@ -118,6 +118,8 @@ import java.util.List;
 
             //Toast.makeText(this, "Map is ready", Toast.LENGTH_SHORT).show();
 
+            moveScreen(new LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM, address.getAddressLine(0) );
+
         }
     }
 
@@ -139,7 +141,7 @@ import java.util.List;
 
                             Location currentLocation = (Location) task.getResult();
                             // once we get that location in result - we can move the screen towards that result
-                            moveScreen(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
+                            moveScreen(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM, "My Location");
 
 
                         } else {
@@ -167,6 +169,7 @@ import java.util.List;
         if (mLocationPermissionGranted) { // need to check if the gps is on and location is permitted
 
             getDeviceLocation();
+            initSearch();
 
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -178,13 +181,19 @@ import java.util.List;
             mMap.setMyLocationEnabled(true);
             mMap.getUiSettings().setMyLocationButtonEnabled(false);
 
+
+
         }
     }
 
-    private void moveScreen(LatLng latlng, float zoom){
+    private void moveScreen(LatLng latlng, float zoom, String title){
 
         Log.e(TAG, "moveScreen: moving the screen to : lat:" + latlng.latitude + " lng: " + latlng.longitude ); // just so we know where is is moving the camera to
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng,zoom));
+
+        MarkerOptions options = new MarkerOptions().position(latlng).title(title);
+        mMap.addMarker(options);
+
     }
 
     private void initMap(){

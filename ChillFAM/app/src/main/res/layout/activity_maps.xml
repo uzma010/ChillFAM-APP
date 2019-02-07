@@ -24,7 +24,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:background="#fff"
+        android:background="@drawable/white_border"
         android:elevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,11 +47,11 @@
             android:layout_centerVertical="true"
             android:textSize="15sp"
             android:textColor="#000"
-
+            android:singleLine="true"
             android:imeOptions="actionSearch"
             android:id="@+id/input_search"
             android:background="@null"
-            android:hint="Enter Address, City or Post Code"/>
+            android:hint=" Enter Address, City or Post Code"/>
 
 
     </android.support.design.circularreveal.CircularRevealRelativeLayout>
