@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -13,8 +14,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,6 +59,7 @@ import java.util.List;
 
     //widget
     private EditText mSearchText;
+    private ImageView mGPS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) { // @Nullable  add before bundle?
@@ -67,6 +71,8 @@ import java.util.List;
          mapFragment.getMapAsync(this);**/
 
         mSearchText = (EditText) findViewById(R.id.input_search);
+
+        mGPS = (ImageView) findViewById(R.id.ic_gps);
 
         getLocationPermission();
 
@@ -89,6 +95,14 @@ import java.util.List;
 
                 }
                 return false;
+            }
+        });
+
+        mGPS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: clicked gps location");
+                getDeviceLocation();
             }
         });
     }
@@ -191,8 +205,14 @@ import java.util.List;
         Log.e(TAG, "moveScreen: moving the screen to : lat:" + latlng.latitude + " lng: " + latlng.longitude ); // just so we know where is is moving the camera to
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng,zoom));
 
-        MarkerOptions options = new MarkerOptions().position(latlng).title(title);
-        mMap.addMarker(options);
+        if(!title.equals("My Location")){
+
+
+            MarkerOptions options = new MarkerOptions().position(latlng).title(title);
+            mMap.addMarker(options);
+
+        }
+
 
     }
 
