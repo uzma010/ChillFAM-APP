@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ChillFAM</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_food">Food</string>
+    <string name="google_maps_api_key">AIzaSyABhHQyK_RDjxVMzJFUn1oJUSs8U5uWagA</string>
+
+
+</resources>
