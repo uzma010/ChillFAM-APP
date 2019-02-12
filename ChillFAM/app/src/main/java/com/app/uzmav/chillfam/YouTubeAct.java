@@ -14,12 +14,11 @@ import com.google.android.youtube.player.YouTubePlayerView;
 
 import static android.support.constraint.Constraints.TAG;
 
-public class YouTubeAct extends YouTubeBaseActivity { // implements YouTubePlayer.OnInitializedListener, YouTubePlayer.PlaybackEventListener, YouTubePlayer.PlayerStateChangeListener
+public class YouTubeAct extends YouTubeBaseActivity  implements YouTubePlayer.OnInitializedListener, YouTubePlayer.PlaybackEventListener, YouTubePlayer.PlayerStateChangeListener{
 
 
     //global
     public static final String API_KEY = "AIzaSyABhHQyK_RDjxVMzJFUn1oJUSs8U5uWagA";
-   // public static final String YOUTUBE_ID = "";
     public static final String VIDEO_ID = "jrwyZPrs";
 
     //variables
@@ -27,7 +26,7 @@ public class YouTubeAct extends YouTubeBaseActivity { // implements YouTubePlaye
     public YouTubePlayer.OnInitializedListener mOnInitializedListener;
 
     //widget
-    Button btnPlay;
+  //  Button btnPlay;
 
 
     @Override
@@ -37,10 +36,12 @@ public class YouTubeAct extends YouTubeBaseActivity { // implements YouTubePlaye
 
         Log.d(TAG,"onCreate: starting");
 
-        btnPlay = (Button) findViewById(R.id.btnPlay);
+      //  btnPlay = (Button) findViewById(R.id.btnPlay);
         mplayerView = (YouTubePlayerView)findViewById(R.id.playerview);
+        mplayerView.initialize(YouTubeConfig.getApiKey(), this);
 
 
+/*
         mOnInitializedListener = new YouTubePlayer.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
@@ -54,27 +55,27 @@ public class YouTubeAct extends YouTubeBaseActivity { // implements YouTubePlaye
             public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
 
             }
-        };
+        };*/
 
-        btnPlay.setOnClickListener(new View.OnClickListener() {
+    /*    btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mplayerView.initialize(YouTubeConfig.getApiKey(), mOnInitializedListener);
 
             }
-        });
+        });*/
 
 
     }
 
-  /*  @Override
+    @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
 
         youTubePlayer.setPlayerStateChangeListener(this);
         youTubePlayer.setPlaybackEventListener(this);
 
         if(!b){
-            youTubePlayer.cueVideo(VIDEO_ID);
+            youTubePlayer.cuePlaylist("RD9lIoSHRqvkg");
         }
 
     }
@@ -82,9 +83,9 @@ public class YouTubeAct extends YouTubeBaseActivity { // implements YouTubePlaye
     @Override
     public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
 
-    }*/
+    }
 
-/*    @Override
+    @Override
     public void onPlaying() { //
 
     }
@@ -137,5 +138,5 @@ public class YouTubeAct extends YouTubeBaseActivity { // implements YouTubePlaye
     @Override
     public void onError(YouTubePlayer.ErrorReason errorReason) {//
 
-    }*/
+    }
 }
