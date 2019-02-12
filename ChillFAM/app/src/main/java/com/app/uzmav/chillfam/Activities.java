@@ -8,7 +8,7 @@ import android.widget.Button;
 
 public class Activities extends AppCompatActivity {
 
-    private Button buttips;
+    private Button buttips, btnyoutube;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +25,26 @@ public class Activities extends AppCompatActivity {
                 openTips();
             }
         });
+
+        //youtube Button
+        btnyoutube = (Button) findViewById(R.id.button8); // external button on the activities side
+        btnyoutube.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                openYoutube();
+            }
+        });
     }
 
     // open tips page
     public void openTips() {
         Intent intent = new Intent(this, Tips.class);
+        startActivity(intent);
+    }
+
+    // open youtube page
+    public void openYoutube() {
+        Intent intent = new Intent(this, YouTubeAct.class);
         startActivity(intent);
     }
 }
