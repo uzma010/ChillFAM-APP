@@ -6,27 +6,53 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.app.uzmav.chillfam.AdapterYT.MyCustomAdapter;
+import com.app.uzmav.chillfam.ModelYT.VideoDetails;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 import static android.support.constraint.Constraints.TAG;
 
-public class YouTubeAct extends YouTubeBaseActivity  implements YouTubePlayer.OnInitializedListener, YouTubePlayer.PlaybackEventListener, YouTubePlayer.PlayerStateChangeListener{
+public class YouTubeAct extends AppCompatActivity{
 
 
     //global
     public static final String API_KEY = "AIzaSyABhHQyK_RDjxVMzJFUn1oJUSs8U5uWagA";
-    public static final String VIDEO_ID = "jrwyZPrs";
+    public static final String URL = "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=UCFKE7WVJfvaHW5q283SxchA&maxResults=8&key=AIzaSyABhHQyK_RDjxVMzJFUn1oJUSs8U5uWagA";
 
     //variables
-    public YouTubePlayerView mplayerView;
-    public YouTubePlayer.OnInitializedListener mOnInitializedListener;
+    public ArrayList<VideoDetails> mVideoDetailsArrayList;
+    public MyCustomAdapter myCustomAdapter;
+    public VideoDetails mVD;
+
+    //JSON objects
+    public JSONObject mJasonObject1, mJasonObject2, mJasonVideoID, mJasonSnippet, mJasonObjectDefault;
+    public JSONArray mJasonArray;
+
+
 
     //widget
   //  Button btnPlay;
+
+    public ListView videoList;
+    private String video_ID;
 
 
     @Override
@@ -36,107 +62,98 @@ public class YouTubeAct extends YouTubeBaseActivity  implements YouTubePlayer.On
 
         Log.d(TAG,"onCreate: starting");
 
-      //  btnPlay = (Button) findViewById(R.id.btnPlay);
-        mplayerView = (YouTubePlayerView)findViewById(R.id.playerview);
-        mplayerView.initialize(YouTubeConfig.getApiKey(), this);
+        videoList = (ListView) findViewById(R.id.videoList);
 
+        mVideoDetailsArrayList = new ArrayList<>();
 
-/*
-        mOnInitializedListener = new YouTubePlayer.OnInitializedListener() {
-            @Override
-            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+        myCustomAdapter = new MyCustomAdapter(this,mVideoDetailsArrayList);
 
-
-                youTubePlayer.cuePlaylist("RD9lIoSHRqvkg");
-
-            }
-
-            @Override
-            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-
-            }
-        };*/
-
-    /*    btnPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mplayerView.initialize(YouTubeConfig.getApiKey(), mOnInitializedListener);
-
-            }
-        });*/
-
+        displayVideos();
 
     }
 
-    @Override
-    public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
 
-        youTubePlayer.setPlayerStateChangeListener(this);
-        youTubePlayer.setPlaybackEventListener(this);
 
-        if(!b){
-            youTubePlayer.cuePlaylist("RD9lIoSHRqvkg");
+    private void displayVideos() {
+
+        RequestQueue mRequestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest mStringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    mJasonObject1 = new JSONObject(response);
+                    mJasonArray = mJasonObject1.getJSONArray("items"); // here
+
+                    for (int i = 0; i < mJasonArray.length(); i++){
+
+                        mJasonObject2 = mJasonArray.getJSONObject(i);
+                        mJasonVideoID = mJasonObject2.getJSONObject("id");
+                        mJasonSnippet = mJasonObject2.getJSONObject("snippet");
+                        mJasonObjectDefault = mJasonSnippet.getJSONObject("thumbnails").getJSONObject("medium");
+
+                        video_ID = mJasonVideoID.getString("videoId"); //videoId to playlist Id mJasonSnippet.getString("videoId")
+                       // video_ID = mJasonSnippet.getString("channelId");
+
+             /*           mVD = new VideoDetails();
+
+                        mVD.setVIDEO_ID(video_ID); //video_ID);
+                        mVD.setTITLE(mJasonSnippet.getString("title"));
+                        mVD.setDESCRIPTION(mJasonSnippet.getString("description"));
+                        mVD.setURL(mJasonObjectDefault.getString("url"));*/
+
+                       // String videoID = mJasonVideoID.getString("videoId");
+                        String titleHead = mJasonSnippet.getString("title");
+                        String description = mJasonSnippet.getString("description");
+                        String url = mJasonObjectDefault.getString("url");
+
+                        mVideoDetailsArrayList.add(new VideoDetails(video_ID,titleHead,description,url));
+
+
+
+                       // mVideoDetailsArrayList.add(mVD);
+
+                    }
+
+                    videoList.setAdapter(myCustomAdapter);
+                    myCustomAdapter.notifyDataSetChanged();
+
+                    Toast.makeText(getApplicationContext(), "YouTube Displaying", Toast.LENGTH_LONG).show();
+
+                }
+                catch(JSONException e){
+                    e.printStackTrace();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();//error.getMessage()
+                Log.d(TAG, "ErrorListener: Error Report");
+
+            }
         }
+        );
+
+        mRequestQueue.add(mStringRequest);
+
+
 
     }
 
-    @Override
-    public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
 
-    }
-
-    @Override
-    public void onPlaying() { //
-
-    }
-
-    @Override
-    public void onPaused() {//
-
-    }
-
-    @Override
-    public void onStopped() {//
-
-    }
-
-    @Override
-    public void onBuffering(boolean b) {//
-
-    }
-
-    @Override
-    public void onSeekTo(int i) {//
-
-    }
-
-    @Override
-    public void onLoading() {//
-
-    }
-
-    @Override
-    public void onLoaded(String s) {//
-
-    }
-
-    @Override
-    public void onAdStarted() {//
-
-    }
-
-    @Override
-    public void onVideoStarted() {//
-
-    }
-
-    @Override
-    public void onVideoEnded() {//
-
-    }
-
-    @Override
-    public void onError(YouTubePlayer.ErrorReason errorReason) {//
-
-    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
