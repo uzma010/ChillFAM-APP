@@ -130,7 +130,7 @@ import java.util.List;
 
             Log.d(TAG, "geoSearchLocate: Found Location: " + address.toString());
 
-            //Toast.makeText(this, "Map is ready", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Map is ready", Toast.LENGTH_SHORT).show();
 
             moveScreen(new LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM, address.getAddressLine(0) );
 

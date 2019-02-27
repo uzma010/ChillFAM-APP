@@ -1,133 +1,106 @@
 package com.app.uzmav.chillfam;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.support.annotation.Nullable;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+import com.google.android.youtube.player.YouTubeBaseActivity;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 import static android.support.constraint.Constraints.TAG;
 
-public class MainYT2 extends AppCompatActivity {
-
-    private RecyclerView mRecyclerView;
-    private GAdapterYT2 mAdapter;
-    private ArrayList<ItemYT2> mVideoArrayList;
-    private RequestQueue mRequestQueue; // needed for volley
-
-    public ItemYT2 mVD;
+public class MainYT2 extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener, YouTubePlayer.PlaybackEventListener, YouTubePlayer.PlayerStateChangeListener {
 
 
+    YouTubePlayerView mPlayerView;
 
-    //JSON variables
-    //JSON objects
-    public JSONObject  mJasonObject2, mJasonVideoID, mJasonSnippet, mJasonObjectDefault, mJasonVidURL;
-    public JSONArray mJasonArray;
-
-
+    public static final String API_KEY = "AIzaSyABhHQyK_RDjxVMzJFUn1oJUSs8U5uWagA";
+    public static final String VIDEO_ID = "PLoDMUMwp3-ONSrHufIodDM6FYUTEg-4vA";
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_yt2);
 
-        mRecyclerView = findViewById(R.id.recycleView);
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mPlayerView = (YouTubePlayerView)findViewById(R.id.playerView2);
 
-        mVideoArrayList = new ArrayList<>();
-
-        mRequestQueue = Volley.newRequestQueue(this);
-
-        mAdapter = new GAdapterYT2(MainYT2.this, mVideoArrayList);
-        mRecyclerView.setAdapter(mAdapter);
-
-        parseJSON();
-        
-
+        mPlayerView.initialize(API_KEY, this);
 
     }
 
-    private void parseJSON() {
 
-        String URL = "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=UCFKE7WVJfvaHW5q283SxchA&maxResults=5&key=AIzaSyABhHQyK_RDjxVMzJFUn1oJUSs8U5uWagA";
+    @Override
+    public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean Yes) {
 
-        JsonObjectRequest jRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            //JSONObject mJ = new JSONObject(response);
+        youTubePlayer.setPlayerStateChangeListener(this);
+        youTubePlayer.setPlaybackEventListener(this);
 
-                            JSONArray mJArray = response.getJSONArray("item");
+        if(!Yes){
+            youTubePlayer.cuePlaylist(VIDEO_ID);
+        }
 
-                            for (int i = 0; i < mJArray.length(); i++){
+    }
 
-                                mJasonObject2 = mJArray.getJSONObject(i);
-                                mJasonVideoID = mJasonObject2.getJSONObject("id");
-                                mJasonSnippet = mJasonObject2.getJSONObject("snippet");
-                                mJasonObjectDefault = mJasonSnippet.getJSONObject("thumbnails");
-                                mJasonVidURL = mJasonObjectDefault.getJSONObject("medium");
+    @Override
+    public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
 
-                                String videoID = mJasonVideoID.getString("videoId");
-                                String titleHead = mJasonSnippet.getString("title");
-                                String description = mJasonSnippet.getString("description");
-                                String url = mJasonVidURL.getString("url");
+    }
 
-                                mVideoArrayList.add(new ItemYT2(videoID,titleHead,description,url));
+    @Override
+    public void onPlaying() {
 
+    }
 
-                                /* mVD = new ItemYT2();
+    @Override
+    public void onPaused() {
 
-                                mVD.setVIDEO_ID(mJasonVideoID.getString("videoId")); //video_ID);
-                                mVD.setTITLE(mJasonSnippet.getString("title"));
-                                mVD.setDESCRIPTION(mJasonSnippet.getString("description"));
-                                mVD.setURL(mJasonVidURL.getString("url"));
+    }
 
-                                mVideoArrayList.add(mVD);*/
+    @Override
+    public void onStopped() {
 
+    }
 
+    @Override
+    public void onBuffering(boolean b) {
 
-                            }
+    }
 
-                            mAdapter = new GAdapterYT2(MainYT2.this, mVideoArrayList);
-                            mRecyclerView.setAdapter(mAdapter);
+    @Override
+    public void onSeekTo(int i) {
 
+    }
 
-                        } catch (JSONException e) {
+    @Override
+    public void onLoading() {
 
-                           // e.printStackTrace();
+    }
 
-                        }
+    @Override
+    public void onLoaded(String s) {
 
+    }
 
-                    }
-                }, new Response.ErrorListener(){
-            @Override
-            public  void onErrorResponse(VolleyError error){
+    @Override
+    public void onAdStarted() {
 
-                error.printStackTrace();
-            }
+    }
 
-        });
+    @Override
+    public void onVideoStarted() {
 
-        mRequestQueue.add(jRequest);
+    }
 
+    @Override
+    public void onVideoEnded() {
+
+    }
+
+    @Override
+    public void onError(YouTubePlayer.ErrorReason errorReason) {
 
     }
 }

@@ -95,7 +95,7 @@ public class MyCustomAdapter extends BaseAdapter {
         mLinerLayout = (LinearLayout)convertView.findViewById(R.id.VIDEOS);
         final VideoDetails mVideoDetails =  mVideoDetailsArrayList.get(position);
 
-        Log.d("chief", "mesage of pos: " + mVideoDetails.getTITLE() +" --  VideoID: "+ mVideoDetails.getVIDEO_ID());
+        Log.d("chief", "message of pos: " + mVideoDetails.getTITLE() +" --  VideoID: "+ mVideoDetails.getVIDEO_ID());
 
 
         convertView.setOnClickListener(new View.OnClickListener() {

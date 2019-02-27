@@ -8,7 +8,7 @@ import android.widget.Button;
 
 public class Activities extends AppCompatActivity {
 
-    private Button buttips, btnyoutube;
+    private Button btntips, btnyoutube, btnMotivate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,13 +16,21 @@ public class Activities extends AppCompatActivity {
         setContentView(R.layout.activity_activities);
 
 
-
         //Tips Button
-        buttips = (Button) findViewById(R.id.button9); // external button on the activities side
-        buttips.setOnClickListener(new View.OnClickListener(){
+        btntips = (Button) findViewById(R.id.button9); // external button on the activities side
+        btntips.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 openTips();
+            }
+        });
+
+        //Youtube Button for motivational ted talks
+        btnMotivate = (Button)findViewById(R.id.btnVid2);
+        btnMotivate.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                openYTMot();
             }
         });
 
@@ -36,9 +44,16 @@ public class Activities extends AppCompatActivity {
         });
     }
 
+
+    // open ted talks on procrastination
+    private void openYTMot() {
+        Intent i = new Intent(this, MainYT2.class);
+        startActivity(i);
+    }
+
     // open tips page
     public void openTips() {
-        Intent intent = new Intent(this, Tips.class);
+        Intent intent = new Intent(this, YTAct3.class);
         startActivity(intent);
     }
 

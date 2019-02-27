@@ -46,6 +46,7 @@
         <activity android:name=".Maps" />
         <activity android:name=".PlayVideoDetails" />
         <activity android:name=".StartVideoActivity" />
+        <activity android:name=".YTAct3"/>
         <activity android:name=".MainYT2"/>
     </application>
 

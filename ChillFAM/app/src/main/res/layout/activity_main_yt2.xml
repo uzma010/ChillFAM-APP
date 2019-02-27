@@ -7,13 +7,20 @@
     android:layout_height="match_parent"
     tools:context= "com.app.uzmav.chillfam.MainYT2">
 
-    <android.support.v7.widget.RecyclerView
+    <com.google.android.youtube.player.YouTubePlayerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/playerView2"
+        android:background="#fff">
+    </com.google.android.youtube.player.YouTubePlayerView>
+
+ <!--   <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/darker_gray"
         >
 
-    </android.support.v7.widget.RecyclerView>
+    </android.support.v7.widget.RecyclerView>-->
 
 </RelativeLayout>
