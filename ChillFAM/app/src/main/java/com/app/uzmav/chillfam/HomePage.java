@@ -113,7 +113,7 @@ public class HomePage extends AppCompatActivity {
 
             // open music page
         public void openMusic() {
-            Intent intent = new Intent(this, Music.class);
+            Intent intent = new Intent(this, MainSpotify.class);
             startActivity(intent);
         }
 
