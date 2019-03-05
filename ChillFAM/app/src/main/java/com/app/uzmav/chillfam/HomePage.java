@@ -132,9 +132,6 @@ public class HomePage extends AppCompatActivity {
 
 
 
-    //public void buttonOnClick(View v){
-    //    Button button = (Button) v;
-      //  ((Button) v).setText("clicked");}
 
 
 

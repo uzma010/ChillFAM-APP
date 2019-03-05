@@ -8,13 +8,16 @@
     tools:context=".Activities">
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_height="29dp"
+        android:text="YouTube Activities"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="51dp"
-        android:text="Activities" />
+        app:layout_constraintVertical_bias="0.075" />
 
     <Button
         android:id="@+id/button8"

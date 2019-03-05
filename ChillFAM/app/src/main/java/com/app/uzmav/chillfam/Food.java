@@ -34,7 +34,7 @@ public class Food extends AppCompatActivity {
 
 
         //Brain Food Button
-        butbrain = (Button) findViewById(R.id.button5); // external button on the food side
+        butbrain = (Button) findViewById(R.id.BrainBtn); // external button on the food side
         butbrain.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -43,7 +43,7 @@ public class Food extends AppCompatActivity {
         });
 
         //google maps api Button
-        butmap = (Button) findViewById(R.id.button6); // external button on the food side
+        butmap = (Button) findViewById(R.id.MapBtn); // external button on the food side
         butmap.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
