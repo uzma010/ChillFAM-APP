@@ -49,7 +49,9 @@
         <activity android:name=".YTAct3" />
         <activity android:name=".MainYT2" />
         <activity android:name=".MainSpotify" />
-        <activity android:name=".HomePage"></activity>
+        <activity android:name=".HomePage" />
+        <activity android:name=".QuizTing.MainQuiz" />
+        <activity android:name=".QuizTing.QuizActivity"></activity>
     </application>
 
 </manifest>
