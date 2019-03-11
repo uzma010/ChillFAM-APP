@@ -37,7 +37,7 @@ public class QuizActivity extends AppCompatActivity {
 
 
     //widgets variables
-    private TextView Txtscore, TxtQuestion, TxtQuestionCount , TxtTimer;
+    private TextView Txtscore, TxtQuestion, TxtQuestionCount , TxtDiffLvl , TxtTimer;
 
 
     private RadioGroup RDGroup;
@@ -78,6 +78,7 @@ public class QuizActivity extends AppCompatActivity {
         Txtscore = findViewById(R.id.Txtscore);
         TxtQuestion = findViewById(R.id.TextQuestion);
         TxtQuestionCount = findViewById(R.id.TxtQuestionCount);
+        TxtDiffLvl = findViewById(R.id.TxtDifficultyLvl);
         TxtTimer = findViewById(R.id.textTimer);
         RDGroup = findViewById(R.id.RadioGroup);
         RD1 = findViewById(R.id.radioBtn1);
@@ -89,11 +90,15 @@ public class QuizActivity extends AppCompatActivity {
         cntTxtDefaultColour = TxtTimer.getTextColors();
 
 
+        //get difficulty level from intent
+        Intent i = getIntent();
+        String mDiffChoice = i.getStringExtra(MainQuiz.EXTRA_DIFF);
 
+        TxtDiffLvl.setText("Difficulty Level: " + mDiffChoice);
 
         if(savedInstanceState == null) { // only not null if there is a state to be restored.
             QuizDB dbHelp = new QuizDB(this);
-            questionList = dbHelp.getDiffQuestions("MEDIUM"); // creates db for the first time dbHelp.getAllTheQuestions() --checking to see if new db request is created based on difficulty
+            questionList = dbHelp.getDiffQuestions(mDiffChoice); // creates db for the first time dbHelp.getAllTheQuestions() --checking to see if new db request is created based on difficulty
 
             questionTotal = questionList.size();
             Collections.shuffle(questionList); // gives us a random question

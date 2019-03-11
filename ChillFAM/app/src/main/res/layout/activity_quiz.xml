@@ -26,10 +26,19 @@
         android:freezesText="true"/>
 
     <TextView
+        android:id="@+id/TxtDifficultyLvl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Difficulty Level: "
+        android:textColor="@android:color/black"
+        android:layout_below="@id/TxtQuestionCount"
+        android:freezesText="true"/>
+
+    <TextView
         android:id="@+id/textTimer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="00:30"
+        android:text="00:20"
         android:textColor="@android:color/black"
         android:layout_below="@id/Txtscore"
         android:textSize="60sp"

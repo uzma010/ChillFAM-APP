@@ -6,7 +6,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.app.uzmav.chillfam.QuizTing.QuizActivity;
@@ -14,13 +16,18 @@ import com.app.uzmav.chillfam.R;
 
 public class MainQuiz extends AppCompatActivity {
 
+    //constant
     private static final int REQUEST_CODE = 1;
+    public static final String EXTRA_DIFF = "ExtraDIFF";
 
     //highscore stuff
     public static  final String SHARE_ =  "Share";
     public static final String HIGH_SCRE = "KeyHIGHSCR";
 
+    //widgets
     private TextView TxtHighScr;
+    private Spinner SpinDiff;
+
     private int mHighScre;
 
     @Override
@@ -28,7 +35,19 @@ public class MainQuiz extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_quiz);
 
+        SpinDiff = findViewById(R.id.SpinDiff); // change this?
+
+        String [] mDiffLevels = Question.getDIffLevls(); //we call this questions on the class itself not on the object
+
+        ArrayAdapter<String> mAdapterDifficulty = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mDiffLevels);
+        mAdapterDifficulty.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // adjust the look of the drop down menu to make it look better
+
+        SpinDiff.setAdapter(mAdapterDifficulty); // set adapter with ou spinner - get our spinner difficulty levels and place them in the spinner
+
+
         TxtHighScr = findViewById(R.id.TxtHigh);
+
+
         LoadHS();
 
 
@@ -45,7 +64,15 @@ public class MainQuiz extends AppCompatActivity {
     }
 
     private void openQuiz() {
+
+        //need to pass the difficulty level to the next page
+        String mDifficultyChosen = SpinDiff.getSelectedItem().toString(); // gets whatever item the user selected on the spinner
+
+
         Intent intent = new Intent(this, QuizActivity.class);
+
+        intent.putExtra(EXTRA_DIFF, mDifficultyChosen);
+
         startActivityForResult(intent, REQUEST_CODE); // calls the result back from the start
     }
 

@@ -119,7 +119,7 @@ public class Question implements Parcelable {
         Difficulty = difficulty;
     }
 
-    public static String[] GetDIffLevls(){
+    public static String[] getDIffLevls(){
         //retreives all diflevels
         return new  String[]{
                 DIFF_EASY, DIFF_MED, DIFF_HARD
