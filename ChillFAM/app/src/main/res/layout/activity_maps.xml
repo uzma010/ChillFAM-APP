@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -14,6 +16,8 @@
         tools:context=".Maps"
         android:name="com.google.android.gms.maps.SupportMapFragment" />
 
+
+
     <android.support.design.circularreveal.CircularRevealRelativeLayout
 
         android:id="@+id/mapslayout1"
@@ -21,37 +25,47 @@
         android:layout_height="46dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:background="@drawable/white_border"
         android:elevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/map">
 
+
+
         //makes the background of the text box easier on the eye @drawable/white_border
 
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+        <!--<ImageView
             android:id="@+id/ic_magnify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:src="@drawable/ic_magnify"/>
+            android:src="@drawable/ic_magnify" />
 
-        <EditText
+        <TextView
+            android:id="@+id/input_search"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="-29dp"
             android:layout_toRightOf="@id/ic_magnify"
-            android:layout_centerVertical="true"
-            android:textSize="15sp"
-            android:textColor="#000"
-            android:singleLine="true"
-            android:imeOptions="actionSearch"
-            android:id="@+id/input_search"
             android:background="@null"
-            android:hint=" Enter Address, City or Post Code"/>
+            android:hint=" Enter Address, City or Post Code"
+            android:imeOptions="actionSearch"
+            android:singleLine="true"
+            android:textColor="#000"
+            android:textSize="15sp" />-->
+
+        <fragment
+            android:id="@+id/autocomplete_fragment"
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint=" Enter Address, City or Post Code"
+            android:background="@null" />
 
 
     </android.support.design.circularreveal.CircularRevealRelativeLayout>

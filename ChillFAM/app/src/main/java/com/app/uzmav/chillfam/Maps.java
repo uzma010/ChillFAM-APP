@@ -22,7 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -30,16 +30,25 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.security.Security;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-//import android.support.annotation.Nullable;
 
 
     public class Maps extends FragmentActivity implements OnMapReadyCallback {
@@ -52,16 +61,26 @@ import java.util.List;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1212;
     private static final float DEFAULT_ZOOM = 15f;
 
+    public static final String API_KEY = "AIzaSyABhHQyK_RDjxVMzJFUn1oJUSs8U5uWagA";
+
     //variables
     public boolean mLocationPermissionGranted = false;
     public GoogleMap mMap;
     public FusedLocationProviderClient mFusedLocationProviderClient;
 
     //widget
-    private EditText mSearchText;
+    private TextView mSearchText;
     private ImageView mGPS;
+    private AutocompleteSupportFragment mAutocompleteSupportFragment;
 
-    @Override
+    private Marker mark;
+
+    //trial for fragment gps
+    private String Rname, Raddr, Rboth;
+    private LatLng  RLatLngLoc;
+    private String RID;
+
+        @Override
     protected void onCreate(Bundle savedInstanceState) { // @Nullable  add before bundle?
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
@@ -70,8 +89,82 @@ import java.util.List;
          .findFragmentById(R.id.map);
          mapFragment.getMapAsync(this);**/
 
-        mSearchText = (EditText) findViewById(R.id.input_search);
+       // mSearchText = (TextView) findViewById(R.id.input_search);
 
+        mAutocompleteSupportFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
+
+        // Initialize Places.
+        //client library
+        Places.initialize(getApplicationContext(), API_KEY);
+        // Create a new Places client instance.
+        PlacesClient placesClient = Places.createClient(this);
+
+
+        //filter to only the uk
+        mAutocompleteSupportFragment.setCountry("UK");
+        // Specify the types of place data to return.
+        mAutocompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG));
+
+        // Set up a PlaceSelectionListener to handle the response.
+        mAutocompleteSupportFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+
+               RLatLngLoc = place.getLatLng();
+               //RLngLoc = ;
+               Rname = place.getName();
+               Raddr = place.getAddress();
+               RID =  place.getId();
+
+               Rboth = Rname + ", " + Raddr;
+
+                // geoSearchLocate(); Values below:
+
+
+                Geocoder geoCoder = new Geocoder(Maps.this);
+
+                List<Address> listAdd = new ArrayList<>();
+
+                Log.d(TAG, "geoSearchLocateME: place name ME: " + Rname + "  " + Raddr + "  " + Rboth  );
+
+                try{
+
+                    listAdd = geoCoder.getFromLocationName(Rboth, 1);
+
+                }catch(IOException e){
+                    Log.e(TAG, "geoSearchLocateME: IOException: "+ e.getMessage() );
+                }
+
+                Log.d(TAG, "geoSearchLocateME: ListAdd: " + listAdd);
+                if(listAdd.size()>0) {
+                    Address address = listAdd.get(0);
+
+                    Log.d(TAG, "geoSearchLocateME: Found Location: " + address.toString());
+
+                    String RTitle = Rname +address.getAddressLine(0) ;
+
+                    moveScreen(RLatLngLoc, DEFAULT_ZOOM, RTitle);
+
+                }
+
+
+
+                Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+
+
+                //Toast.makeText(this, "" + status.toString(), Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "An error occurred: " + status);
+            }
+        });
+
+
+        //gps icon
         mGPS = (ImageView) findViewById(R.id.ic_gps);
 
         getLocationPermission();
@@ -82,9 +175,10 @@ import java.util.List;
     private void initSearch(){
         Log.d(TAG, "initSearch: Initializing search method");
 
+
         // override return key that will search therefore no onclick listener
 
-        mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+     /*   mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
@@ -96,7 +190,7 @@ import java.util.List;
                 }
                 return false;
             }
-        });
+        });*/
 
         mGPS.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,21 +205,27 @@ import java.util.List;
 
         Log.d(TAG, "geoSearchLocate: locating");
 
-        String searchString = mSearchText.getText().toString();
+        String searchString = Rname; //mSearchText.getText().toString();
+
+
+        String searchStringOG = mSearchText.getText().toString();
 
         Geocoder geoCoder = new Geocoder(Maps.this);
 
         List<Address> listAdd = new ArrayList<>();
 
+        Log.d(TAG, "geoSearchLocate: place name ME: " + searchString + " geoSearchLocate: place name OG: " + searchStringOG);
+
         try{
 
-            listAdd = geoCoder.getFromLocationName(searchString, 1);
+            listAdd = geoCoder.getFromLocationName(searchStringOG, 1);
 
         }catch(IOException e){
             Log.e(TAG, "geoSearchLocate: IOException: "+ e.getMessage() );
         }
 
-        if(listAdd.size()>0){
+        Log.d(TAG, "geoSearchLocate: ListAdd: " + listAdd);
+        if(listAdd.size()>0) {
             Address address = listAdd.get(0);
 
             Log.d(TAG, "geoSearchLocate: Found Location: " + address.toString());
@@ -133,6 +233,7 @@ import java.util.List;
             Toast.makeText(this, "Map is ready", Toast.LENGTH_SHORT).show();
 
             moveScreen(new LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM, address.getAddressLine(0) );
+            //moveScreen(RLatLngLoc, DEFAULT_ZOOM, address.getAddressLine(0));
 
         }
     }

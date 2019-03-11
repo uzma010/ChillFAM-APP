@@ -51,7 +51,8 @@
         <activity android:name=".MainSpotify" />
         <activity android:name=".HomePage" />
         <activity android:name=".QuizTing.MainQuiz" />
-        <activity android:name=".QuizTing.QuizActivity"></activity>
+        <activity android:name=".QuizTing.QuizActivity" />
+        <activity android:name=".MapsV2.V2MapsActivity"></activity>
     </application>
 
 </manifest>
