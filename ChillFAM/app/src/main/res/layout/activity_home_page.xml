@@ -11,8 +11,9 @@
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
-        android:layout_height="29dp"
+        android:layout_height="wrap_content"
         android:text="Chill FAM"
+        android:textSize="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -22,42 +23,46 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="51dp"
+        android:layout_marginTop="122dp"
+        android:drawableLeft="@drawable/ic_food"
         android:text="Food"
-        />
+        android:textSize="40dp" />
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="138dp"
+        android:layout_marginTop="227dp"
+        android:drawableLeft="@drawable/ic_activities"
         android:text="Activities"
-        />
+        android:textSize="40dp" />
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="278dp"
+        android:layout_marginTop="328dp"
+        android:drawableLeft="@drawable/ic_music"
         android:text="Music"
-        />
+        android:textSize="40dp" />
 
     <Button
         android:id="@+id/button4"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="396dp"
-        android:text="Tips"
-        />
+        android:layout_marginTop="424dp"
+        android:drawableLeft="@drawable/ic_quiz"
+        android:text="Quiz"
+        android:textSize="40dp" />
 
 </RelativeLayout>

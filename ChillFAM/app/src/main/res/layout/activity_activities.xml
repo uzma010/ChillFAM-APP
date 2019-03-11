@@ -10,8 +10,10 @@
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
-        android:layout_height="29dp"
+        android:layout_height="wrap_content"
         android:text="YouTube Activities"
+        android:textSize="50dp"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -21,29 +23,32 @@
 
     <Button
         android:id="@+id/button8"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="102dp"
-        android:text="Home Tutorials" />
+        android:layout_marginTop="197dp"
+        android:text="Home Yoga"
+        android:textSize="30dp" />
 
     <Button
         android:id="@+id/btnVid2"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="188dp"
-        android:text="Motivational Updates" />
+        android:layout_marginTop="283dp"
+        android:text="Motivational Updates"
+        android:textSize="30dp" />
 
 
     <Button
         android:id="@+id/button9"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="298dp"
-        android:text="External Tips" />
+        android:layout_marginTop="399dp"
+        android:text="Home Exercise"
+        android:textSize="30dp" />
 </RelativeLayout>

@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.app.uzmav.chillfam.QuizTing.MainQuiz;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
@@ -113,14 +114,14 @@ public class HomePage extends AppCompatActivity {
 
             // open music page
         public void openMusic() {
-            Intent intent = new Intent(this, MainSpotify.class);
+            Intent intent = new Intent(this, Music.class);
             startActivity(intent);
         }
 
 
             // open tips page
         public void openTips() {
-            Intent intent = new Intent(this, Tips.class);
+            Intent intent = new Intent(this, MainQuiz.class);
             startActivity(intent);
         }
 

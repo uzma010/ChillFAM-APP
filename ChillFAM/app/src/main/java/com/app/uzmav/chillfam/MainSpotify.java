@@ -19,6 +19,9 @@ public class MainSpotify extends AppCompatActivity {
     private static final String REDIRECT_URI = "com.app.uzmav.chillfam://callback";
     private SpotifyAppRemote mSpotifyAppRemote;
 
+    private long mBackTimer;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +59,7 @@ public class MainSpotify extends AppCompatActivity {
     private void connected() {
         // Then we will write some more code here.
         // playing a playlist
-        mSpotifyAppRemote.getPlayerApi().play("spotify:playlist:37i9dQZF1DX2sUQwD7tbmL");
+        mSpotifyAppRemote.getPlayerApi().play(Music.getSPlayID()); // "spotify:playlist:37i9dQZF1DX2sUQwD7tbmL"
 
 
         // Subscribe to PlayerState
@@ -84,5 +87,19 @@ public class MainSpotify extends AppCompatActivity {
         SpotifyAppRemote.disconnect(mSpotifyAppRemote);
     }
 
+    @Override
+    public void onBackPressed() {
+
+        if(mBackTimer + 2000 > System.currentTimeMillis()){
+
+            finish(); // dont want to save the score if you do then - FinishQuiz():
+
+        }else{
+            Toast.makeText(this, "Press Back again to finish", Toast.LENGTH_SHORT).show();
+        }
+
+        mBackTimer = System.currentTimeMillis();
+
+    }
 
 }

@@ -1,3 +1,4 @@
+
 package com.app.uzmav.chillfam.QuizTing;
 
 import android.os.Parcel;
@@ -5,7 +6,14 @@ import android.os.Parcelable;
 
 public class Question implements Parcelable {
 
-    private String Question, optn1, optn2, optn3;
+    //text variables - constant for difficulty levels
+    public static final String DIFF_EASY = "EASY";
+    public static final String DIFF_MED = "MEDIUM";
+    public static final String DIFF_HARD = "HARD";
+
+
+    // member variables
+    private String Question, optn1, optn2, optn3, Difficulty;
     private int answerNmbr;
 
 
@@ -18,12 +26,13 @@ public class Question implements Parcelable {
     }
 
     //constructor
-    public Question(String question, String optn1, String optn2, String optn3, int answerNmbr) {
+    public Question(String question, String optn1, String optn2, String optn3, int answerNmbr, String difficulty) {
         Question = question;
         this.optn1 = optn1;
         this.optn2 = optn2;
         this.optn3 = optn3;
         this.answerNmbr = answerNmbr;
+        this.Difficulty = difficulty;
     }
 
     protected Question(Parcel in) {
@@ -32,15 +41,17 @@ public class Question implements Parcelable {
         optn2 = in.readString();
         optn3 = in.readString();
         answerNmbr = in.readInt();
+        Difficulty = in.readString();
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(Parcel dest, int flags) { // make sure its th ame order
         dest.writeString(Question);
         dest.writeString(optn1);
         dest.writeString(optn2);
         dest.writeString(optn3);
         dest.writeInt(answerNmbr);
+        dest.writeString(Difficulty);
     }
 
     @Override
@@ -99,4 +110,22 @@ public class Question implements Parcelable {
     public void setAnswerNmbr(int answerNmbr) {
         this.answerNmbr = answerNmbr;
     }
+
+    public String getDifficulty() {
+        return Difficulty;
+    }
+
+    public void setDifficulty(String difficulty) {
+        Difficulty = difficulty;
+    }
+
+    public static String[] GetDIffLevls(){
+        //retreives all diflevels
+        return new  String[]{
+                DIFF_EASY, DIFF_MED, DIFF_HARD
+        };
+    }
+
+
+
 }

@@ -93,10 +93,10 @@ public class QuizActivity extends AppCompatActivity {
 
         if(savedInstanceState == null) { // only not null if there is a state to be restored.
             QuizDB dbHelp = new QuizDB(this);
-            questionList = dbHelp.getAllTheQuestions(); // creates db for the first time
+            questionList = dbHelp.getDiffQuestions("MEDIUM"); // creates db for the first time dbHelp.getAllTheQuestions() --checking to see if new db request is created based on difficulty
 
             questionTotal = questionList.size();
-            Collections.shuffle(questionList); // gives us a random queston
+            Collections.shuffle(questionList); // gives us a random question
 
             ShowNextQuestion();
         } else{
@@ -111,13 +111,14 @@ public class QuizActivity extends AppCompatActivity {
             mTimeLeftMillis = savedInstanceState.getLong(KY_TIME_MILLS);
             qAnswered = savedInstanceState.getBoolean(KY_ANS);
 
+
             //all our valuues are stored if our questions where answer or if it was answered then we can show the correct question
             if(!qAnswered ){
                 StartCountDwn();
             }else{
                 //need to make sure the colour text is resent
                 UpdateCNTDWNTxt();
-                Solution();
+                Solution(); //updatedyehh
             }
         }
 
@@ -134,6 +135,7 @@ public class QuizActivity extends AppCompatActivity {
                         Toast.makeText(QuizActivity.this, "Please Select an Answer", Toast.LENGTH_SHORT).show();
                     }
                 } else{
+                   // ShowNextQuestion();
                     ShowNextQuestion();
 
                 }

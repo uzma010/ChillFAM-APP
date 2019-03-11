@@ -16,14 +16,7 @@ public class Activities extends AppCompatActivity {
         setContentView(R.layout.activity_activities);
 
 
-        //Tips Button
-        btntips = (Button) findViewById(R.id.button9); // external button on the activities side
-        btntips.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                openTips();
-            }
-        });
+
 
         //Youtube Button for motivational ted talks
         btnMotivate = (Button)findViewById(R.id.btnVid2);
@@ -42,6 +35,15 @@ public class Activities extends AppCompatActivity {
                 openYoutube();
             }
         });
+
+        //home exersize Button
+        btntips = (Button) findViewById(R.id.button9); // external button on the activities side
+        btntips.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                openExer();
+            }
+        });
     }
 
 
@@ -52,7 +54,7 @@ public class Activities extends AppCompatActivity {
     }
 
     // open tips page
-    public void openTips() {
+    public void openExer() {
         Intent intent = new Intent(this, YTAct3.class);
         startActivity(intent);
     }
