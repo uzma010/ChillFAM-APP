@@ -79,12 +79,38 @@
         android:layout_marginTop="72dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:background="@drawable/white_border"
+
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/map"
         android:src="@drawable/ic_gps"
         />
+
+    <ImageView
+        android:id="@+id/nerby_Places"
+        android:layout_width="40dp"
+        android:layout_marginTop="108dp"
+        android:layout_marginLeft="8dp"
+        android:layout_height="40dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/ic_mapnerby"
+         />
+
+
+    <ImageView
+        android:id="@+id/place_Info"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="108dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_info"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nerby_Places" />
+
+
 
 
 </android.support.constraint.ConstraintLayout>

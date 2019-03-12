@@ -6,6 +6,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -22,6 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.app.uzmav.chillfam.AdapterYT.CustomInfoMapAdapter;
+import com.app.uzmav.chillfam.MapsV2.PlaceInfo;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -70,15 +73,19 @@ import java.util.List;
 
     //widget
     private TextView mSearchText;
-    private ImageView mGPS;
+    private ImageView mGPS, mInfo, mNerby;
     private AutocompleteSupportFragment mAutocompleteSupportFragment;
 
     private Marker mark;
 
     //trial for fragment gps
-    private String Rname, Raddr, Rboth;
-    private LatLng  RLatLngLoc;
-    private String RID;
+    private String Rname, Raddr, Rboth, RID, RphnNumb;
+    private LatLng RLatLngLoc;
+    private Double RRating;
+    private Uri RWebURL;
+    private PlaceInfo mPlace;
+
+
 
         @Override
     protected void onCreate(Bundle savedInstanceState) { // @Nullable  add before bundle?
@@ -111,42 +118,22 @@ import java.util.List;
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
 
-               RLatLngLoc = place.getLatLng();
-               //RLngLoc = ;
-               Rname = place.getName();
-               Raddr = place.getAddress();
-               RID =  place.getId();
+                Log.d(TAG, "geoSearchLocate3: Adding shit");
 
-               Rboth = Rname + ", " + Raddr;
+                RLatLngLoc = place.getLatLng();
+                Rname = place.getName();
+                Raddr = place.getAddress();
+                RID =  place.getId();
+                RRating = place.getRating();
+                RphnNumb = place.getPhoneNumber();
+                RWebURL = place.getWebsiteUri();
 
+                Log.d(TAG, "geoSearchLocate3: Added shit");
+
+                Rboth = Rname + ", " + Raddr;
                 // geoSearchLocate(); Values below:
 
-
-                Geocoder geoCoder = new Geocoder(Maps.this);
-
-                List<Address> listAdd = new ArrayList<>();
-
-                Log.d(TAG, "geoSearchLocateME: place name ME: " + Rname + "  " + Raddr + "  " + Rboth  );
-
-                try{
-
-                    listAdd = geoCoder.getFromLocationName(Rboth, 1);
-
-                }catch(IOException e){
-                    Log.e(TAG, "geoSearchLocateME: IOException: "+ e.getMessage() );
-                }
-
-                Log.d(TAG, "geoSearchLocateME: ListAdd: " + listAdd);
-                if(listAdd.size()>0) {
-                    Address address = listAdd.get(0);
-
-                    Log.d(TAG, "geoSearchLocateME: Found Location: " + address.toString());
-
-                    String RTitle = Rname +address.getAddressLine(0) ;
-
-                    moveScreen(RLatLngLoc, DEFAULT_ZOOM, RTitle);
-
-                }
+                geoSearchLocate();
 
 
 
@@ -167,10 +154,17 @@ import java.util.List;
         //gps icon
         mGPS = (ImageView) findViewById(R.id.ic_gps);
 
+        //info icon
+         mInfo = (ImageView) findViewById(R.id.place_Info);
+
+         //maps nerby icon
+         mNerby = (ImageView) findViewById(R.id.nerby_Places);
+
         getLocationPermission();
 
 
     }
+
 
     private void initSearch(){
         Log.d(TAG, "initSearch: Initializing search method");
@@ -178,19 +172,6 @@ import java.util.List;
 
         // override return key that will search therefore no onclick listener
 
-     /*   mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-
-                if(actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE || event.getAction() ==KeyEvent.ACTION_DOWN || event.getAction() == KeyEvent.KEYCODE_ENTER    ){
-
-                    //execute the method to search
-                    geoSearchLocate();
-
-                }
-                return false;
-            }
-        });*/
 
         mGPS.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -199,44 +180,69 @@ import java.util.List;
                 getDeviceLocation();
             }
         });
+
+        mInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: clicked Place Info");
+
+                    if(mark.isInfoWindowShown()){
+                        mark.hideInfoWindow();
+                    }else{
+                        Log.d(TAG, "onClick: clicked Place Info");
+
+                        mark.showInfoWindow();
+                    }
+
+            }
+        });
+
+    /*    mNerby.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int PLACE_PICKER_REQUEST = 1;
+
+
+                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+
+                startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
+            }
+        });*/
     }
-    
+
+
     private void geoSearchLocate(){
 
         Log.d(TAG, "geoSearchLocate: locating");
 
-        String searchString = Rname; //mSearchText.getText().toString();
-
-
-        String searchStringOG = mSearchText.getText().toString();
 
         Geocoder geoCoder = new Geocoder(Maps.this);
 
         List<Address> listAdd = new ArrayList<>();
 
-        Log.d(TAG, "geoSearchLocate: place name ME: " + searchString + " geoSearchLocate: place name OG: " + searchStringOG);
+        Log.d(TAG, "geoSearchLocateME: place name ME: " + Rname + "  " + Raddr + "  " + Rboth  );
 
         try{
 
-            listAdd = geoCoder.getFromLocationName(searchStringOG, 1);
+            listAdd = geoCoder.getFromLocationName(Rboth, 1);
 
         }catch(IOException e){
-            Log.e(TAG, "geoSearchLocate: IOException: "+ e.getMessage() );
+            Log.e(TAG, "geoSearchLocateME: IOException: "+ e.getMessage() );
         }
 
-        Log.d(TAG, "geoSearchLocate: ListAdd: " + listAdd);
+        Log.d(TAG, "geoSearchLocateME: ListAdd: " + listAdd);
         if(listAdd.size()>0) {
             Address address = listAdd.get(0);
 
-            Log.d(TAG, "geoSearchLocate: Found Location: " + address.toString());
+            Log.d(TAG, "geoSearchLocateME: Found Location: " + address.toString());
 
-            Toast.makeText(this, "Map is ready", Toast.LENGTH_SHORT).show();
+            String RTitle = Rname +address.getAddressLine(0) ;
 
-            moveScreen(new LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM, address.getAddressLine(0) );
-            //moveScreen(RLatLngLoc, DEFAULT_ZOOM, address.getAddressLine(0));
+            moveScreen(RLatLngLoc, DEFAULT_ZOOM, Rname);
 
         }
     }
+
 
     private void getDeviceLocation() {
         Log.d(TAG, "getDeviceLocation: getting the  devices current location");
@@ -265,7 +271,6 @@ import java.util.List;
                         }
                     }
                 });
-
 
             }
 
@@ -301,16 +306,24 @@ import java.util.List;
         }
     }
 
+
     private void moveScreen(LatLng latlng, float zoom, String title){
 
         Log.e(TAG, "moveScreen: moving the screen to : lat:" + latlng.latitude + " lng: " + latlng.longitude ); // just so we know where is is moving the camera to
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng,zoom));
 
+        mMap.setInfoWindowAdapter(new CustomInfoMapAdapter(Maps.this));
+
         if(!title.equals("My Location")){
 
+           String TxtBox = "Address: " + Raddr + "\n" +
+                    "Phone Number: " + RphnNumb + "\n"
+                    + "Rating: " + RRating + "\n" +
+                    "Website URL: " + RWebURL + "\n";
 
-            MarkerOptions options = new MarkerOptions().position(latlng).title(title);
-            mMap.addMarker(options);
+
+            MarkerOptions options = new MarkerOptions().position(latlng).title(title).snippet(TxtBox);
+            mark = mMap.addMarker(options);
 
         }
 
@@ -325,7 +338,8 @@ import java.util.List;
     }
 
 
-// needs to check if we have users permission to access location
+
+    // needs to check if we have users permission to access location
     private void getLocationPermission(){
         // need to create a string array of the permissions that we want add log so tester can see in LOGCAT ANDROID MONITOR
         Log.d(TAG, "getLocationPermission: getting location permission");
