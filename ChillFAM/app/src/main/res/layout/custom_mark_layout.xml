@@ -31,8 +31,7 @@
             android:ellipsize="end"
             android:maxLines="10"
             android:textColor="@color/quantum_grey800"
-            android:textSize="14sp"
-            android:textStyle="bold"/>
+            android:textSize="14sp" />
 
     </LinearLayout>
 

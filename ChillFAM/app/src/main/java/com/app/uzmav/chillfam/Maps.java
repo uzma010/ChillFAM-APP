@@ -64,7 +64,7 @@ import java.util.List;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1212;
     private static final float DEFAULT_ZOOM = 15f;
 
-    public static final String API_KEY = "AIzaSyABhHQyK_RDjxVMzJFUn1oJUSs8U5uWagA";
+    public static final String API_KEY = "AIzaSyBobP82pZjGapmuUw3tKLRU1tFueC6v17A";
 
     //variables
     public boolean mLocationPermissionGranted = false;
@@ -79,11 +79,11 @@ import java.util.List;
     private Marker mark;
 
     //trial for fragment gps
-    private String Rname, Raddr, Rboth, RID, RphnNumb;
-    private LatLng RLatLngLoc;
-    private Double RRating;
-    private Uri RWebURL;
-    private PlaceInfo mPlace;
+    public String Rname, Raddr, Rboth, RID, RphnNumb;
+    public LatLng RLatLngLoc;
+    public Double RRating;
+    public Uri RWebURL;
+    public PlaceInfo mPlace;
 
 
 

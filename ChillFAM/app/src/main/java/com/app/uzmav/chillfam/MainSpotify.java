@@ -3,6 +3,7 @@ package com.app.uzmav.chillfam;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.spotify.android.appremote.api.ConnectionParams;
@@ -21,11 +22,19 @@ public class MainSpotify extends AppCompatActivity {
 
     private long mBackTimer;
 
+    //widget
+    private TextView mText;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_spotify);
+
+        mText = (TextView) findViewById(R.id.textSpotifyInfo);
+
+
     }
 
     @Override
@@ -40,7 +49,7 @@ public class MainSpotify extends AppCompatActivity {
                     public void onConnected(SpotifyAppRemote spotifyAppRemote) {
                         mSpotifyAppRemote = spotifyAppRemote;
                         Log.d("MainSpotifyActivity", "Connected! Yay!");
-                        Toast.makeText(getApplicationContext(), "Spotify is Conecting ", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Spotify is Connected ", Toast.LENGTH_LONG).show();
 
                         // Now you can start interacting with App Remote
                         connected();
@@ -63,15 +72,8 @@ public class MainSpotify extends AppCompatActivity {
 
 
         // Subscribe to PlayerState
-        /*mSpotifyAppRemote.getPlayerApi().subscribeToPlayerState().setEventCallback(PlayerState -> {
-            final Track track = PlayerState.track;
-            if (track != null) {
-                Log.d("MainSpotifu", track.name + " by " + track.artist.name);
-            }
-        });
-*/
-        //final Track track = PlayerState.track;
-        /*.setEventCallback(playerState -> {
+        mSpotifyAppRemote.getPlayerApi().subscribeToPlayerState();
+                /*.setEventCallback(playerState -> {
                     final Track track = playerState.track;
                     if (track != null) {
                         Log.d("MainActivity", track.name + " by " + track.artist.name);
@@ -92,7 +94,7 @@ public class MainSpotify extends AppCompatActivity {
 
         if(mBackTimer + 2000 > System.currentTimeMillis()){
 
-            finish(); // dont want to save the score if you do then - FinishQuiz():
+            finish();
 
         }else{
             Toast.makeText(this, "Press Back again to finish", Toast.LENGTH_SHORT).show();
