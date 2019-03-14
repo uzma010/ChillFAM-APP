@@ -54,14 +54,14 @@
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/btnMChill"
+            android:id="@+id/btnMGrime"
             android:layout_width="165dp"
             android:layout_height="100dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="240dp"
-            android:text="Chilled"
+            android:text="Rap"
             android:textSize="20dp" />
 
 

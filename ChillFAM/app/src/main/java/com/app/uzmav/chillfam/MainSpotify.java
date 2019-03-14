@@ -3,6 +3,8 @@ package com.app.uzmav.chillfam;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +26,7 @@ public class MainSpotify extends AppCompatActivity {
 
     //widget
     private TextView mText;
+    //private Button mBtn;
 
 
 
@@ -35,6 +38,13 @@ public class MainSpotify extends AppCompatActivity {
         mText = (TextView) findViewById(R.id.textSpotifyInfo);
 
 
+
+    }
+
+    public void openNotify() {
+
+        NotifyDialog mNotification = new NotifyDialog();
+        mNotification.show(getSupportFragmentManager(), "Notify Dialog");
     }
 
     @Override
@@ -53,6 +63,9 @@ public class MainSpotify extends AppCompatActivity {
 
                         // Now you can start interacting with App Remote
                         connected();
+                        openNotify();
+
+                        //add pop up notification here
 
                     }
 
@@ -68,17 +81,12 @@ public class MainSpotify extends AppCompatActivity {
     private void connected() {
         // Then we will write some more code here.
         // playing a playlist
-        mSpotifyAppRemote.getPlayerApi().play(Music.getSPlayID()); // "spotify:playlist:37i9dQZF1DX2sUQwD7tbmL"
+        mSpotifyAppRemote.getPlayerApi().play(Music.getSPlayID());
 
 
         // Subscribe to PlayerState
         mSpotifyAppRemote.getPlayerApi().subscribeToPlayerState();
-                /*.setEventCallback(playerState -> {
-                    final Track track = playerState.track;
-                    if (track != null) {
-                        Log.d("MainActivity", track.name + " by " + track.artist.name);
-                    }
-                });*/
+
 
 
     }
@@ -94,7 +102,9 @@ public class MainSpotify extends AppCompatActivity {
 
         if(mBackTimer + 2000 > System.currentTimeMillis()){
 
+            onStop();
             finish();
+
 
         }else{
             Toast.makeText(this, "Press Back again to finish", Toast.LENGTH_SHORT).show();

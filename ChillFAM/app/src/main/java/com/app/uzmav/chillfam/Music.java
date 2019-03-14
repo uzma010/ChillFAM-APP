@@ -19,7 +19,7 @@ public class Music extends AppCompatActivity implements View.OnClickListener {
 
         Button mBtnChart = findViewById(R.id.btnMChart);
         Button mBtnHip = findViewById(R.id.btnMHip);
-        Button mBtnChill = findViewById(R.id.btnMChill);
+        Button mBtnGrime = findViewById(R.id.btnMGrime);
         Button mBtnClass = findViewById(R.id.btnMClass);
         Button mBtnRock = findViewById(R.id.btnMRock);
         Button mBtnIRock = findViewById(R.id.btnMIndRock);
@@ -31,7 +31,7 @@ public class Music extends AppCompatActivity implements View.OnClickListener {
 
         mBtnChart.setOnClickListener(this);
         mBtnHip.setOnClickListener(this);
-        mBtnChill.setOnClickListener(this);
+        mBtnGrime.setOnClickListener(this);
         mBtnClass.setOnClickListener(this);
         mBtnRock.setOnClickListener(this);
         mBtnIRock.setOnClickListener(this);
@@ -53,44 +53,44 @@ public class Music extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnMChart:
-                PLAYLIST_ID = "spotify:playlist:37i9dQZF1DX2sUQwD7tbmL";
+                PLAYLIST_ID = "spotify:user:topsify:playlist:1QM1qz09ZzsAPiXphF1l4S";
 
                 break;
 
             case R.id.btnMHip:
-                PLAYLIST_ID = "spotify:user:1245804746:playlist:2LGdSw8ZuOIXirHHohi8cw";
+                PLAYLIST_ID = "spotify:user:uzmav123-gb:playlist:4ZXWb7I6Ki3jyYpdKjOuqq";
                 break;
 
-            case R.id.btnMChill:
-                PLAYLIST_ID = "spotify:user:1245804746:playlist:2LGdSw8ZuOIXirHHohi8cw";
+            case R.id.btnMGrime:
+                PLAYLIST_ID = "spotify:user:spotify:playlist:37i9dQZF1DXcDoDDetPsEg";
                 break;
 
             case R.id.btnMClass:
-                PLAYLIST_ID = "spotify:user:1245804746:playlist:2LGdSw8ZuOIXirHHohi8cw";
+                PLAYLIST_ID = "spotify:user:uzmav123-gb:playlist:0fOI3Gmt3bzzYw3bnVhdqD";
                 break;
 
             case R.id.btnMRock:
-                PLAYLIST_ID = "spotify:user:1245804746:playlist:2LGdSw8ZuOIXirHHohi8cw";
+                PLAYLIST_ID = "spotify:user:spotify:playlist:37i9dQZF1DXcF6B6QPhFDv";
                 break;
 
             case R.id.btnMIndRock:
-                PLAYLIST_ID = "spotify:user:1245804746:playlist:2LGdSw8ZuOIXirHHohi8cw";
+                PLAYLIST_ID = "spotify:playlist:37i9dQZF1DX2sUQwD7tbmL";
                 break;
 
             case R.id.btnMMellow:
-                PLAYLIST_ID = "spotify:user:1245804746:playlist:2LGdSw8ZuOIXirHHohi8cw";
+                PLAYLIST_ID = "spotify:user:uzmav123-gb:playlist:7q6hdVluzp6IRnPaehW6LR";
                 break;
 
             case R.id.btnMHappy:
-                PLAYLIST_ID = "spotify:user:1245804746:playlist:2LGdSw8ZuOIXirHHohi8cw";
+                PLAYLIST_ID = "spotify:user:spotify:playlist:37i9dQZF1DXeby79pVadGa";
                 break;
 
             case R.id.btnMPop:
-                PLAYLIST_ID = "spotify:user:1245804746:playlist:2LGdSw8ZuOIXirHHohi8cw";
+                PLAYLIST_ID = "spotify:user:spotify:playlist:37i9dQZF1DX2A29LI7xHn1";
                 break;
 
             case R.id.btnMWorkout:
-                PLAYLIST_ID = "spotify:user:1245804746:playlist:2LGdSw8ZuOIXirHHohi8cw";
+                PLAYLIST_ID = "spotify:user:spotify:playlist:37i9dQZF1DX1gcrZ1xC96D";
                 break;
         }
 
